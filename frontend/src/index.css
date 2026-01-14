@@ -10,7 +10,8 @@ body { @apply bg-gray-50 text-gray-800 antialiased; }
 }
 
 @layer components {
-	.container { @apply max-w-6xl mx-auto px-4; }
+	/* make pages use more horizontal space while retaining comfortable gutters */
+	.container { @apply max-w-screen-xl mx-auto px-6; }
 
 	/* Buttons */
 	button { @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium; }

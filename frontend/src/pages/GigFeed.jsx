@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchGigs } from '../redux/slices/gigsSlice'
 import { Link } from 'react-router-dom'
 import Card from '../components/Card'
 import Banner from '../components/Banner'
 import Spinner from '../components/Spinner'
-import useDebounce from '../hooks/useDebounce'
 
 export default function GigFeed(){
   const dispatch = useDispatch()
   const { items, loading } = useSelector(s => s.gigs)
-  const [q,setQ] = useState('')
-
   useEffect(()=>{ dispatch(fetchGigs({ search: '' })) }, [])
   
   useEffect(()=>{
