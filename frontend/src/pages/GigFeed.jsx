@@ -25,18 +25,7 @@ export default function GigFeed(){
   return (
     <div>
       <Banner />
-      <div className="flex gap-3 mb-6">
-        <div className="relative flex-1">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
-          <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search gigs, e.g. logo design" className="w-full pl-10 border border-gray-200 px-4 py-3 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-200" />
-          {q && <button onClick={()=>setQ('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">✕</button>}
-        </div>
-        <div className="w-36">
-          <button onClick={()=>dispatch(fetchGigs({ search: q }))} className="w-full bg-indigo-600 text-white px-4 py-3 rounded shadow hover:bg-indigo-700 flex items-center justify-center gap-2">
-            {loading ? <Spinner size={4} /> : 'Search'}
-          </button>
-        </div>
-      </div>
+      
 
       {loading ? (
         <div className="flex items-center justify-center py-20"><Spinner size={8} /></div>
