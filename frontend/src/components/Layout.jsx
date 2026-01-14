@@ -45,6 +45,16 @@ export default function Layout({ children }){
     return ()=> socket.disconnect()
   }, [user])
 
+  // close dropdown on outside click
+  useEffect(()=>{
+    function onDoc(e){
+      if (!open) return
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('click', onDoc)
+    return ()=> document.removeEventListener('click', onDoc)
+  }, [open])
+
   const doLogout = async ()=>{
     try{
       await dispatch(logout()).unwrap()
@@ -87,7 +97,6 @@ export default function Layout({ children }){
                   </div>
                   )}
                 </div>
-                )}
               </div>
             ) : (
               <div className="space-x-3">

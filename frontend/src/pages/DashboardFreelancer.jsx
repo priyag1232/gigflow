@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Spinner from '../components/Spinner'
+import api from '../services/api'
 
 export default function DashboardFreelancer(){
   const user = useSelector(s=>s.auth.user)
@@ -19,13 +20,13 @@ export default function DashboardFreelancer(){
   useEffect(()=>{
     let mounted = true
     if (!user) { setLoading(false); return }
-    api.get('/api/bids/me').then(r=>{ if(mounted) setBids(r.data) }).finally(()=>{ if(mounted) setLoading(false) })
+    api.get('/api/bids/me').then(r=>{ if(mounted) setBids(r.data) }).catch(err=>{ if(mounted) console.error('Failed to fetch bids', err) }).finally(()=>{ if(mounted) setLoading(false) })
     return ()=> mounted=false
   }, [user])
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4">Freelancer Dashboard</h2>
+      <h2 className="text-2xl font-semibold mb-4">My Bids</h2>
       {!user && <div className="text-gray-500">Login to see your dashboard.</div>}
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="md:col-span-2 bg-white p-4 rounded shadow">

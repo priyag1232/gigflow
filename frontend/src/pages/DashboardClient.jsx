@@ -23,7 +23,7 @@ export default function DashboardClient(){
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4">Client Dashboard</h2>
+      <h2 className="text-2xl font-semibold mb-4">My Gigs</h2>
       {loading ? <div className="py-8"><Spinner size={8} /></div> : (
         <div>
           {gigs.length === 0 && <div className="text-gray-500">You have no open gigs. Post a gig to receive bids.</div>}
