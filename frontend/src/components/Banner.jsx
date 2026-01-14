@@ -33,7 +33,13 @@ export default function Banner(){
                   <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search gigs, e.g. logo design" className="w-full pl-12 pr-12 border border-white/30 bg-white/10 placeholder-indigo-100 text-white rounded-full py-3 focus:outline-none focus:ring-2 focus:ring-white/30" />
                   {q && <button onClick={()=>setQ('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-indigo-100">✕</button>}
                 </div>
-                <button onClick={()=>dispatch(fetchGigs({ search: q }))} className="bg-white text-indigo-700 px-5 py-2 rounded-full font-semibold shadow hover:opacity-95 flex items-center gap-2">
+                <button onClick={async ()=>{
+                    setLoading(true)
+                    try{
+                      await dispatch(fetchGigs({ search: q.trim() }))
+                    }catch(e){}
+                    setLoading(false)
+                  }} className="bg-white text-indigo-700 px-5 py-2 rounded-full font-semibold shadow hover:opacity-95 flex items-center gap-2">
                   {loading ? <Spinner size={4} /> : 'Search'}
                 </button>
               </div>

@@ -19,15 +19,26 @@ exports.createGig = async (req, res) => {
 
 exports.getGigs = async (req, res) => {
   try {
-    const { search } = req.query;
+    let { search } = req.query;
     const q = { status: 'open' };
-    let gigs;
-    if (search) {
+    let gigs = [];
+
+    if (search && String(search).trim().length > 0) {
+      search = String(search).trim();
+      // primary: text search (fast when index exists)
       gigs = await Gig.find({ $text: { $search: search }, status: 'open' }).populate('ownerId', 'name email');
+
+      // fallback: if text search returned nothing, try a case-insensitive partial match
+      if ((!gigs || gigs.length === 0)) {
+        const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        const re = new RegExp(esc(search), 'i')
+        gigs = await Gig.find({ status: 'open', $or: [{ title: re }, { description: re }] }).sort({ createdAt: -1 }).populate('ownerId', 'name email')
+      }
     } else {
       gigs = await Gig.find(q).sort({ createdAt: -1 }).populate('ownerId', 'name email');
     }
-    res.json(gigs);
+
+    return res.json(gigs);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });

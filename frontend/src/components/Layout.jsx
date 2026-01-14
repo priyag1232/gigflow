@@ -70,9 +70,13 @@ export default function Layout({ children }){
             <Link to="/" className="font-bold text-2xl text-indigo-600">GigFlow</Link>
             <nav className="hidden md:flex items-center gap-3 text-sm text-gray-600">
               <Link to="/" className="px-3 py-1 rounded-md hover:bg-indigo-50">Gigs</Link>
-              <Link to="/post" className="px-3 py-1 rounded-md hover:bg-indigo-50">Post Gig</Link>
-              <Link to="/dashboard/client" className="px-3 py-1 rounded-md hover:bg-indigo-50">My Gigs</Link>
-              <Link to="/dashboard/freelancer" className="px-3 py-1 rounded-md hover:bg-indigo-50">My Bids</Link>
+              {user && (
+                <>
+                  <Link to="/post" className="px-3 py-1 rounded-md hover:bg-indigo-50">Post Gig</Link>
+                  <Link to="/dashboard/client" className="px-3 py-1 rounded-md hover:bg-indigo-50">My Gigs</Link>
+                  <Link to="/dashboard/freelancer" className="px-3 py-1 rounded-md hover:bg-indigo-50">My Bids</Link>
+                </>
+              )}
             </nav>
           </div>
           <div className="relative">
